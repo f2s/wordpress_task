@@ -16,5 +16,5 @@ sudo docker run --name data-mysql -v $PWD/data/mysql:/var/lib/mysql scratch bash
 sudo docker run -d --name=nginx-proxy -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy
 sudo docker run -d --name=wordpress -e VIRTUAL_HOST=${VIRTUAL_HOST} --volumes-from data-mysql -t tutum/wordpress
 
-until curl --write-out %{http_code} --silent --output /dev/null ${VIRTUAL_HOST} | grep '200' >/dev/null; do sleep 0.2; done 
+until curl --write-out %{http_code} --silent --output /dev/null http://${VIRTUAL_HOST} | grep '200' >/dev/null; do sleep 0.2; done 
 echo Please access via http://${VIRTUAL_HOST}
